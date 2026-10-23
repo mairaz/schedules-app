@@ -1,2 +1,26 @@
-<p>shell works!</p>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <span>Escalas</span>
+  <span class="spacer"></span>
+  <span>{{auth.currentUser()?.name}}</span>
+  <button mat-icon-button aria-label="Sair">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="shell-container">
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      @if (auth.currentUser()?.role === 'manager') {
+      <a mat-list-item routerLink="/home/schedules">Escalas</a>
+      <a mat-list-item routerLink="/home/employees">Funcionários</a>
+      <a mat-list-item routerLink="/home/swaps">Trocas</a>
+      } @else {
+      <a mat-list-item routerLink="/my-schedule">Minha escala</a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

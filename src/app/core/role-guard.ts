@@ -4,7 +4,7 @@ import { Auth } from './auth';
 
 export const roleGuard: CanActivateFn = (route, state) => {
   const authService = inject(Auth);
-  const roles = route.data['roles'] as string[];
+  const roles = route.data['role'] as string[];
   const user = authService.currentUser();
 
   if (user && roles.includes(user.role)) return true;

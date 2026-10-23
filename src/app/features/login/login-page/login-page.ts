@@ -5,6 +5,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { Auth } from '../../../core/auth';
+import { Router } from '@angular/router';
 
 
 
@@ -16,22 +18,25 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class LoginPage {
   fb = inject(FormBuilder);
+  auth = inject(Auth);
+  router = inject(Router);
 
   form = this.fb.nonNullable.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
+    email: ['', Validators.required]
   })
 
   enter() {
     if (this.form.invalid) return;
-    const { email, password } = this.form.getRawValue();
-    console.log(email, password)
+    const { email } = this.form.getRawValue();
+    this.auth.login(email).subscribe({
+      next: (user) => {
+        console.log('Success')
+        this.router.navigateByUrl(user[0].role === 'manager' ? '/home/employees' : '/home/my-schedule');
 
-  }
-
-  hide = signal(true);
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
+      },
+      error: (err) => {
+        console.error('Login failed:', err);
+      }
+    });
   }
 }
