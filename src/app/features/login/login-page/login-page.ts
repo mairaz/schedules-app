@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,19 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './login-page.scss',
 })
 export class LoginPage {
+  fb = inject(FormBuilder);
+
+  form = this.fb.nonNullable.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  })
+
+  enter() {
+    if (this.form.invalid) return;
+    const { email, password } = this.form.getRawValue();
+    console.log(email, password)
+
+  }
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
