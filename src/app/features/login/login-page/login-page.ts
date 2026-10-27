@@ -30,6 +30,10 @@ export class LoginPage {
     const { email } = this.form.getRawValue();
     this.auth.login(email).subscribe({
       next: (user) => {
+        if (!user || user.length === 0) {
+          console.error('User not found');
+          return;
+        }
         console.log('Success')
         this.router.navigateByUrl(user[0].role === 'manager' ? '/home/employees' : '/home/my-schedule');
 
