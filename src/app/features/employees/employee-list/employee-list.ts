@@ -7,6 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { PaginatedResponse, User } from '../../../core/models';
 
 @Component({
   selector: 'app-employee-list',
@@ -31,11 +32,11 @@ export class EmployeeList {
       page: this.pageIndex(),
     }),
     stream: ({ params }) =>
-      this.dataService.employees(params.sort, params.order, params.page).pipe(
-        map(response => ({
+      this.dataService.employees(params.sort, params.order || 'asc', params.page).pipe(
+        map((response: PaginatedResponse<User>) => ({
           items: response.data ?? [],
           total_count: response.items ?? 0,
-        })),)
+        })))
   });
 
   readonly isLoadingResults = this.employeesResource.isLoading;
