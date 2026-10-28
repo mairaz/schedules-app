@@ -1,0 +1,50 @@
+<div class="employee-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        {{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Choose an option</mat-label>
+          <mat-select formControlName="position">
+            @for(position of PositionOptions; track position) {
+            <mat-option [value]="position">{{ position }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div formGroupName="availability">
+          @for (day of daysOfWeek; track day) {
+          <div [formGroupName]="day" class="linha-dia">
+            <span class="nome-dia">{{ day }}</span>
+            @for (periodo of shifts; track periodo) {
+            <mat-checkbox [formControlName]="periodo">{{ periodo }}</mat-checkbox>
+            }
+          </div>
+          }
+        </div>
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -14,8 +14,23 @@ export const routes: Routes = [
         path: 'employees',
         canActivate: [roleGuard],
         data: { role: ['manager'] },
-        loadComponent: () => import('./features/employees/employee-list/employee-list')
-          .then(m => m.EmployeeList)
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/employees/employee-list/employee-list')
+              .then(m => m.EmployeeList)
+          },
+          {
+            path: 'new',
+            loadComponent: () => import('./features/employees/employee-form/employee-form')
+              .then(m => m.EmployeeForm)
+          },
+          {
+            path: ':id/edit',
+            loadComponent: () => import('./features/employees/employee-form/employee-form')
+              .then(m => m.EmployeeForm)
+          }
+        ]
       },
       {
         path: 'schedules',

@@ -1,0 +1,39 @@
+
+.full-width {
+  width: 100%;
+}
+
+.employee-form-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+
+  mat-card {
+    width: 100%;
+   max-width:fit-content
+  }
+
+  mat-card-header {
+    margin-bottom: 1.5rem;
+  }
+
+  mat-card-content {
+    min-height: 200px;
+  }
+
+  mat-card-actions {
+    gap: 0.5rem;
+  }
+}
+
+.linha-dia {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.nome-dia {
+  width: 90px;
+  text-transform: capitalize;
+}
