@@ -3,6 +3,13 @@
   position: relative;
 }
 
+.header-actions {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  display: flex;
+  gap: 0.5rem;
+}
+
 .example-table-container {
   position: relative;
   height: 400px;
@@ -39,4 +46,9 @@ table {
 
 .mat-column-created {
   width: 124px;
+}
+
+.mat-column-actions {
+  width: 80px;
+  text-align: center;
 }
