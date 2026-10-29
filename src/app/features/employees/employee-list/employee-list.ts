@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { User } from '../../../core/models/user';
+import { PaginatedResponse } from '../../../core/models';
 
 @Component({
   selector: 'app-employee-list',
@@ -38,9 +39,9 @@ export class EmployeeList {
     }),
     stream: ({ params }) =>
       this.dataService.employees(params.sort, params.order || 'asc', params.page).pipe(
-        map((response: User[]) => ({
-          items: response,
-          total_count: response.length,
+        map((response: PaginatedResponse<User[]>) => ({
+          items: response.data,
+          total_count: response.items,
         })))
   });
 

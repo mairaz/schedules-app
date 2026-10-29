@@ -1,1 +1,29 @@
-<p>my-schedule-page works!</p>
+<div class="container">
+  <div class="corner" [style.grid-row]="1" [style.grid-column]="1"></div>
+
+  @for (day of days; track $index; let i = $index) {
+  <div class="label" [style.grid-row]="1" [style.grid-column]="i + 2">{{ day }}</div>
+  }
+
+  @for (shift of shifts; track $index; let i = $index) {
+  <div class="label" [style.grid-row]="i + 2" [style.grid-column]="1">{{ shift }}</div>
+  }
+
+  @for (shift of shifts; track $index; let row = $index) {
+  @for (day of days; track $index; let col = $index) {
+  <div class="cell" [style.grid-row]="row + 2" [style.grid-column]="col + 2">
+    <div [style.display]=" 'flex' " [style.flex-wrap]=" 'wrap' ">
+      @for (turno of turnosDaCelula(day, shift); track turno.id) {
+      <div class="shift">{{ turno.name }}</div>
+      }
+
+    </div>
+
+    @if(currentUser()?.role ==="manager"){
+    <button mat-raised-button color="warn">+</button>
+
+    }
+  </div>
+  }
+  }
+</div>
