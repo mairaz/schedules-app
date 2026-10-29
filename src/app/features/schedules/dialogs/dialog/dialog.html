@@ -8,7 +8,7 @@
       </mat-card-header>
       <div>
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedUser">
+          <mat-select [(ngModel)]="selectedEmployee">
             @for(user of users; track $index){
             <mat-option [value]="user">{{user.name}}</mat-option>
             }

@@ -3,9 +3,8 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../core/models/user';
-import { PaginatedResponse } from '../core/models';
+import { Employee, PaginatedResponse } from '../core/models';
 import { map } from 'rxjs/internal/operators/map';
-import { shareReplay, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ShiftSchedule } from '../core/models/shiftSchedule';
 
@@ -16,7 +15,7 @@ export class MockData {
   baseUrl = environment.apiUrl;
   http = inject(HttpClient);
   employeesData = toSignal(
-    this.employees('name', 'asc', 0),
+    this.getEmployeesPaginated('name', 'asc', 0),
     {
       initialValue: {
         data: [],
@@ -29,25 +28,24 @@ export class MockData {
       },
     }
   );
-  users = computed(() => this.employeesData().data);
+  employees = computed(() => this.employeesData().data);
 
-
-  employees(sort: string, order: 'asc' | 'desc', page: number): Observable<PaginatedResponse<User>> {
-    return this.http.get<PaginatedResponse<User>>(`${this.baseUrl}/users?role=employee&_sort=${sort}&_order=${order}&_page=${page + 1}`)
+  getEmployeesPaginated(sort: string, order: 'asc' | 'desc', page: number): Observable<PaginatedResponse<Employee>> {
+    return this.http.get<PaginatedResponse<Employee>>(`${this.baseUrl}/users?role=employee&_sort=${sort}&_order=${order}&_page=${page + 1}`)
   }
 
-  getEmployeeById(id: number): Observable<User> {
-    return this.http.get<User[]>(`${this.baseUrl}/users?id=${id}`).pipe(
+  getEmployeeById(id: number): Observable<Employee> {
+    return this.http.get<Employee[]>(`${this.baseUrl}/users?id=${id}`).pipe(
       map(users => users[0])
     );
   }
 
-  updateEmployee(id: number, employeeData: Partial<User>): Observable<User> {
-    return this.http.patch<User>(`${this.baseUrl}/users/${id}`, employeeData);
+  updateEmployee(id: number, employeeData: Partial<Employee>): Observable<Employee> {
+    return this.http.patch<Employee>(`${this.baseUrl}/users/${id}`, employeeData);
   }
 
-  createEmployee(employeeData: Partial<User>): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/users`, employeeData);
+  createEmployee(employeeData: Partial<Employee>): Observable<Employee> {
+    return this.http.post<Employee>(`${this.baseUrl}/users`, employeeData);
   }
 
   getShiftsByEmployeeId(employeeId: number): Observable<ShiftSchedule[]> {

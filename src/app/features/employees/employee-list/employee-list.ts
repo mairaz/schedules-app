@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { User } from '../../../core/models/user';
-import { PaginatedResponse } from '../../../core/models';
+import { Employee, PaginatedResponse } from '../../../core/models';
 
 @Component({
   selector: 'app-employee-list',
@@ -38,8 +38,8 @@ export class EmployeeList {
       page: this.pageIndex(),
     }),
     stream: ({ params }) =>
-      this.dataService.employees(params.sort, params.order || 'asc', params.page).pipe(
-        map((response: PaginatedResponse<User>) => ({
+      this.dataService.getEmployeesPaginated(params.sort, params.order || 'asc', params.page).pipe(
+        map((response: PaginatedResponse<Employee>) => ({
           items: response.data,
           total_count: response.items,
         })))

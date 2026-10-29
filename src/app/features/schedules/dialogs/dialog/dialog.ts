@@ -4,7 +4,7 @@ import { MockData } from '../../../../data/mock-data';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-import { User } from '../../../../core/models';
+import { Employee, User } from '../../../../core/models';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -19,14 +19,14 @@ export class Dialog {
   data = inject(MAT_DIALOG_DATA);
   dataService = inject(MockData)
   dialogRef = inject(MatDialogRef<Dialog>);
-  users = inject(MockData).users();
-  selectedUser = signal<User | undefined>(undefined);
+  users = inject(MockData).employees();
+  selectedEmployee = signal<Employee | undefined>(undefined);
 
   addUserShift() {
-    if (!this.selectedUser()) return
+    if (!this.selectedEmployee()) return
     this.dataService.addShifts({
-      employeeId: this.selectedUser()?.id,
-      name: this.selectedUser()?.name,
+      employeeId: this.selectedEmployee()?.id,
+      name: this.selectedEmployee()?.name,
       ...this.data,
     }).subscribe(
       res => {

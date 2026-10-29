@@ -1,8 +1,8 @@
 import { DayOfWeek, ShiftPeriod } from "./availability";
 
 export interface ShiftSchedule {
-  id: number;
-  employeeId: number;
+  id: string;
+  employeeId: string;
   day: DayOfWeek;
   shift: ShiftPeriod;
   name: string;

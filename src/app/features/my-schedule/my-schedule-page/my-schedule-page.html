@@ -14,7 +14,7 @@
   <div class="cell" [style.grid-row]="row + 2" [style.grid-column]="col + 2">
     <div [style.display]=" 'flex' " [style.flex-wrap]=" 'wrap' ">
       @for (turno of turnosDaCelula(day, shift); track turno.id) {
-      <div class="shift" [ngClass]="turno.name === currentUser()?.name ? 'highlight' : ''">{{ turno.name }}</div>
+      <div class="shift" [ngClass]="turno.employeeId === currentUser()?.id ? 'highlight' : ''">{{ turno.name }}</div>
       }
     </div>
 

@@ -1,6 +1,10 @@
+import { Availability } from "./availability";
+
 export interface Employee {
-  email: string;
-  role: string;
-  name: string;
   id: number;
+  name: string;
+  position: string;
+  email: string;
+  availability: Availability;
+  userId?: string;
 }
