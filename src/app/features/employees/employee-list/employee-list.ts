@@ -39,7 +39,7 @@ export class EmployeeList {
     }),
     stream: ({ params }) =>
       this.dataService.employees(params.sort, params.order || 'asc', params.page).pipe(
-        map((response: PaginatedResponse<User[]>) => ({
+        map((response: PaginatedResponse<User>) => ({
           items: response.data,
           total_count: response.items,
         })))

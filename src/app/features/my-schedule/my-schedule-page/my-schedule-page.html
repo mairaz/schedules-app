@@ -14,13 +14,12 @@
   <div class="cell" [style.grid-row]="row + 2" [style.grid-column]="col + 2">
     <div [style.display]=" 'flex' " [style.flex-wrap]=" 'wrap' ">
       @for (turno of turnosDaCelula(day, shift); track turno.id) {
-      <div class="shift">{{ turno.name }}</div>
+      <div class="shift" [ngClass]="turno.name === currentUser()?.name ? 'highlight' : ''">{{ turno.name }}</div>
       }
-
     </div>
 
     @if(currentUser()?.role ==="manager"){
-    <button mat-raised-button color="warn">+</button>
+    <button mat-raised-button color="warn" (click)="openDialog({shift, day})">+</button>
 
     }
   </div>
