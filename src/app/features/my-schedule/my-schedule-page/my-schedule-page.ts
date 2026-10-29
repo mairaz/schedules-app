@@ -2,12 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { MockData } from '../../../data/mock-data';
 import { Auth } from '../../../core/auth';
 import { DAYS_OF_WEEK, SHIFTS } from '../../../core/models/availability';
-import type { Shift } from '../../../core/models/shift';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../schedules/dialogs/dialog/dialog';
 import { NgClass } from '@angular/common';
+import { ShiftSchedule } from '../../../core/models/shiftSchedule';
 
 @Component({
   selector: 'app-my-schedule-page',
@@ -22,7 +22,7 @@ export class MySchedulePage {
 
   days = DAYS_OF_WEEK;
   shifts = SHIFTS;
-  turnos = signal<Shift[]>([]);
+  turnos = signal<ShiftSchedule[]>([]);
 
   ngOnInit() {
     const user = this.currentUser();

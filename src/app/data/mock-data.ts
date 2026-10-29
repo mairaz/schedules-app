@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../core/models/user';
 import { PaginatedResponse } from '../core/models';
 import { map } from 'rxjs/internal/operators/map';
-import { Shift } from '../core/models/shift';
 import { shareReplay, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ShiftSchedule } from '../core/models/shiftSchedule';
 
 @Injectable({
   providedIn: 'root',
@@ -50,15 +50,15 @@ export class MockData {
     return this.http.post<User>(`${this.baseUrl}/users`, employeeData);
   }
 
-  getShiftsByEmployeeId(employeeId: number): Observable<Shift[]> {
-    return this.http.get<Shift[]>(`${this.baseUrl}/shifts?employeeId=${employeeId}`);
+  getShiftsByEmployeeId(employeeId: number): Observable<ShiftSchedule[]> {
+    return this.http.get<ShiftSchedule[]>(`${this.baseUrl}/shifts?employeeId=${employeeId}`);
   }
 
   getShifts() {
-    return this.http.get<Shift[]>(`${this.baseUrl}/shifts`);
+    return this.http.get<ShiftSchedule[]>(`${this.baseUrl}/shifts`);
   }
 
-  addShifts(employeeShift: Shift): Observable<Shift> {
-    return this.http.post<Shift>(`${this.baseUrl}/shifts`, employeeShift)
+  addShifts(employeeShift: ShiftSchedule): Observable<ShiftSchedule> {
+    return this.http.post<ShiftSchedule>(`${this.baseUrl}/shifts`, employeeShift)
   }
 }

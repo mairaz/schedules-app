@@ -1,4 +1,4 @@
-export type Shift = "morning" | "afternoon" | "evening" | "night";
+export type ShiftPeriod = "morning" | "afternoon" | "evening" | "night";
 export type DayOfWeek = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 
 export interface DayAvailability {
