@@ -22,7 +22,7 @@ export class LoginPage {
   router = inject(Router);
 
   form = this.fb.nonNullable.group({
-    email: ['', Validators.required]
+    email: ['user@example.com', Validators.required]
   })
 
   enter() {

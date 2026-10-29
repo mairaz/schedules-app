@@ -67,7 +67,7 @@ export class EmployeeList {
     this.router.navigate(['/home/employees/new']);
   }
 
-  editEmployee(id: number) {
+  editEmployee(id: string) {
     this.router.navigate(['/home/employees', id, 'edit']);
   }
 }

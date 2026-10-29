@@ -11,7 +11,7 @@
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
       @if (auth.currentUser()?.role === 'manager') {
-      <a mat-list-item routerLink="/home/schedules">Escalas</a>
+      <a mat-list-item routerLink="/home/my-schedule">Escalas</a>
       <a mat-list-item routerLink="/home/employees">Funcionários</a>
       <a mat-list-item routerLink="/home/swaps">Trocas</a>
       } @else {

@@ -31,24 +31,24 @@ export class MockData {
   employees = computed(() => this.employeesData().data);
 
   getEmployeesPaginated(sort: string, order: 'asc' | 'desc', page: number): Observable<PaginatedResponse<Employee>> {
-    return this.http.get<PaginatedResponse<Employee>>(`${this.baseUrl}/users?role=employee&_sort=${sort}&_order=${order}&_page=${page + 1}`)
+    return this.http.get<PaginatedResponse<Employee>>(`${this.baseUrl}/employees?_sort=${sort}&_order=${order}&_page=${page + 1}`)
   }
 
-  getEmployeeById(id: number): Observable<Employee> {
-    return this.http.get<Employee[]>(`${this.baseUrl}/users?id=${id}`).pipe(
-      map(users => users[0])
+  getEmployeeById(id: string): Observable<Employee> {
+    return this.http.get<Employee[]>(`${this.baseUrl}/employees?id=${id}`).pipe(
+      map(employees => employees[0])
     );
   }
 
-  updateEmployee(id: number, employeeData: Partial<Employee>): Observable<Employee> {
-    return this.http.patch<Employee>(`${this.baseUrl}/users/${id}`, employeeData);
+  updateEmployee(id: string, employeeData: Partial<Employee>): Observable<Employee> {
+    return this.http.patch<Employee>(`${this.baseUrl}/employees/${id}`, employeeData);
   }
 
   createEmployee(employeeData: Partial<Employee>): Observable<Employee> {
-    return this.http.post<Employee>(`${this.baseUrl}/users`, employeeData);
+    return this.http.post<Employee>(`${this.baseUrl}/employees`, employeeData);
   }
 
-  getShiftsByEmployeeId(employeeId: number): Observable<ShiftSchedule[]> {
+  getShiftsByEmployeeId(employeeId: string): Observable<ShiftSchedule[]> {
     return this.http.get<ShiftSchedule[]>(`${this.baseUrl}/shifts?employeeId=${employeeId}`);
   }
 

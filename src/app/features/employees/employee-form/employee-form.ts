@@ -27,7 +27,7 @@ export class EmployeeForm implements OnInit {
   private dataService = inject(MockData);
 
   form!: FormGroup;
-  employeeId: number | null = null;
+  employeeId: string | null = null;
   isEditMode = false;
   PositionOptions = ['Manager', 'Bartender', 'Server', 'Cook'];
   daysOfWeek = DAYS_OF_WEEK;
@@ -38,7 +38,7 @@ export class EmployeeForm implements OnInit {
   }
 
   ngOnInit() {
-    this.employeeId = this.route.snapshot.paramMap.get('id') ? Number(this.route.snapshot.paramMap.get('id')) : null;
+    this.employeeId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.employeeId;
     this.form = this.fb.nonNullable.group({
       name: [''],
@@ -87,7 +87,7 @@ export class EmployeeForm implements OnInit {
         }
       });
     } else {
-      this.dataService.createEmployee({ ...employeeData, role: 'employee' }).subscribe({
+      this.dataService.createEmployee(employeeData).subscribe({
         next: () => {
           console.log('Employee created successfully');
           this.router.navigate(['/home/employees']);

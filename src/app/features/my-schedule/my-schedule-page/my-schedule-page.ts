@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../schedules/dialogs/dialog/dialog';
 import { NgClass } from '@angular/common';
 import { ShiftSchedule } from '../../../core/models/shiftSchedule';
+import { Employee } from '../../../core/models';
 
 @Component({
   selector: 'app-my-schedule-page',
@@ -18,6 +19,7 @@ import { ShiftSchedule } from '../../../core/models/shiftSchedule';
 export class MySchedulePage {
   dataService = inject(MockData);
   currentUser = signal(inject(Auth).currentUser());
+  currentEmployee = signal<Employee | undefined>(undefined);
   dialog = inject(MatDialog);
 
   days = DAYS_OF_WEEK;
@@ -27,8 +29,15 @@ export class MySchedulePage {
   ngOnInit() {
     const user = this.currentUser();
     if (user) {
+      this.findCurrentEmployee(user.id);
       this.getShifts();
     }
+  }
+
+  findCurrentEmployee(userId: string) {
+    const employees = this.dataService.employees();
+    const employee = employees.find(emp => emp.userId === userId);
+    this.currentEmployee.set(employee);
   }
 
   getShifts() {
