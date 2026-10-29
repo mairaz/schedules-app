@@ -23,14 +23,19 @@ export class Dialog {
   selectedUser = signal<User | undefined>(undefined);
 
   addUserShift() {
+    if (!this.selectedUser()) return
     this.dataService.addShifts({
-      employeeId: this.selectedUser,
+      employeeId: this.selectedUser()?.id,
+      name: this.selectedUser()?.name,
       ...this.data,
-    }).subscribe(res => {
-      this.dialogRef.close(true);
-    });
+    }).subscribe(
+      res => {
+        this.dialogRef.close(true);
+      },
+      error => {
+        console.error('Erro ao adicionar shifts:', error);
+      }
+    );
   }
-
-
 
 }
