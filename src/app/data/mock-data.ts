@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../core/models/user';
 import { PaginatedResponse } from '../core/models';
 import { map } from 'rxjs/internal/operators/map';
+import { Shift } from '../core/models/shift';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ export class MockData {
   baseUrl = environment.apiUrl;
   http = inject(HttpClient);
 
-  employees(sort: string, order: 'asc' | 'desc', page: number): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/users?role=employee&_sort=${sort}&_order=${order}&_page=${page + 1}`);
+  employees(sort: string, order: 'asc' | 'desc', page: number): Observable<PaginatedResponse<User[]>> {
+    return this.http.get<PaginatedResponse<User[]>>(`${this.baseUrl}/users?role=employee&_sort=${sort}&_order=${order}&_page=${page + 1}`);
   }
 
   getEmployeeById(id: number): Observable<User> {
@@ -29,5 +30,14 @@ export class MockData {
 
   createEmployee(employeeData: Partial<User>): Observable<User> {
     return this.http.post<User>(`${this.baseUrl}/users`, employeeData);
+  }
+
+
+  getShiftsByEmployeeId(employeeId: number): Observable<Shift[]> {
+    return this.http.get<Shift[]>(`${this.baseUrl}/shifts?employeeId=${employeeId}`);
+  }
+
+  getShifts() {
+    return this.http.get<Shift[]>(`${this.baseUrl}/shifts`);
   }
 }
