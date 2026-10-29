@@ -1,0 +1,22 @@
+<div class="card-container">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-header>
+        <mat-card-title>
+          Add Shift
+        </mat-card-title>
+      </mat-card-header>
+      <div>
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedUser">
+            @for(user of users; track $index){
+            <mat-option [value]="user">{{user.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addUserShift()">Add</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>

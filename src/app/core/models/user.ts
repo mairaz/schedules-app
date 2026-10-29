@@ -5,7 +5,7 @@ export interface User {
   email: string;
   role: string;
   name: string;
-  id: number;
+  id: string;
   position: string;
   availability: Availability;
 }
