@@ -6,7 +6,8 @@ import { User } from '../core/models/user';
 import { Employee, PaginatedResponse } from '../core/models';
 import { map } from 'rxjs/internal/operators/map';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ShiftSchedule } from '../core/models/shiftSchedule';
+import { CreateShiftSchedule, ShiftSchedule } from '../core/models/shiftSchedule';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class MockData {
     }
   );
   employees = computed(() => this.employeesData().data);
+  shifts = signal<ShiftSchedule[]>([]);
 
   getEmployeesPaginated(sort: string, order: 'asc' | 'desc', page: number): Observable<PaginatedResponse<Employee>> {
     return this.http.get<PaginatedResponse<Employee>>(`${this.baseUrl}/employees?_sort=${sort}&_order=${order}&_page=${page + 1}`)
@@ -52,11 +54,13 @@ export class MockData {
     return this.http.get<ShiftSchedule[]>(`${this.baseUrl}/shifts?employeeId=${employeeId}`);
   }
 
-  getShifts() {
-    return this.http.get<ShiftSchedule[]>(`${this.baseUrl}/shifts`);
+  getShifts(): Observable<ShiftSchedule[]> {
+    return this.http.get<ShiftSchedule[]>(`${this.baseUrl}/shifts`).pipe(
+      tap((res) => this.shifts.set(res))
+    );
   }
 
-  addShifts(employeeShift: ShiftSchedule): Observable<ShiftSchedule> {
+  addShifts(employeeShift: CreateShiftSchedule): Observable<ShiftSchedule> {
     return this.http.post<ShiftSchedule>(`${this.baseUrl}/shifts`, employeeShift)
   }
 }

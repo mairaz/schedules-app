@@ -7,3 +7,5 @@ export interface ShiftSchedule {
   shift: ShiftPeriod;
   name: string;
 }
+
+export type CreateShiftSchedule = Omit<ShiftSchedule, 'id'>;
