@@ -9,8 +9,8 @@
       <div>
         <mat-form-field>
           <mat-select [(ngModel)]="selectedEmployee">
-            @for(user of users; track $index){
-            <mat-option [value]="user">{{user.name}}</mat-option>
+            @for(employee of employees(); track $index){
+            <mat-option [value]="employee" [disabled]=" employeesAlreadyScheduled().has(employee.id)">{{employee.name}}</mat-option>
             }
           </mat-select>
         </mat-form-field>
