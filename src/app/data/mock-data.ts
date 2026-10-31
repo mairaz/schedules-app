@@ -16,21 +16,17 @@ export class MockData {
   baseUrl = environment.apiUrl;
   http = inject(HttpClient);
   employeesData = toSignal(
-    this.getEmployeesPaginated('name', 'asc', 0),
+    this.getAllEmployees(),
     {
-      initialValue: {
-        data: [],
-        first: 0,
-        prev: null,
-        next: null,
-        last: 0,
-        pages: 0,
-        items: 0,
-      },
+      initialValue: []
     }
   );
-  employees = computed(() => this.employeesData().data);
+  employees = computed(() => this.employeesData());
   shifts = signal<ShiftSchedule[]>([]);
+
+  getAllEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.baseUrl}/employees`)
+  }
 
   getEmployeesPaginated(sort: string, order: 'asc' | 'desc', page: number): Observable<PaginatedResponse<Employee>> {
     return this.http.get<PaginatedResponse<Employee>>(`${this.baseUrl}/employees?_sort=${sort}&_order=${order}&_page=${page + 1}`)
