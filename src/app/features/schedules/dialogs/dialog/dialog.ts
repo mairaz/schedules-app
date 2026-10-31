@@ -28,7 +28,7 @@ export class Dialog {
       return item.employeeId
     }));
   }
-  )
+  );
   employees = computed(() => {
     const employees = this.dataService
       .employees()
@@ -39,6 +39,11 @@ export class Dialog {
     return employees;
   });
   selectedEmployee = signal<Employee | undefined>(undefined);
+
+
+  ngOnInit() {
+    this.dataService.getShifts().subscribe();
+  }
   addUserShift() {
     const employee = this.selectedEmployee()
     if (!employee) return
