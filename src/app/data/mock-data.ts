@@ -61,6 +61,8 @@ export class MockData {
   }
 
   addShifts(employeeShift: CreateShiftSchedule): Observable<ShiftSchedule> {
-    return this.http.post<ShiftSchedule>(`${this.baseUrl}/shifts`, employeeShift)
+    return this.http.post<ShiftSchedule>(`${this.baseUrl}/shifts`, employeeShift).pipe(
+      tap(() => this.getShifts())
+    );
   }
 }
