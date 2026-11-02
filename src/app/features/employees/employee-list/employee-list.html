@@ -4,6 +4,21 @@
       <mat-icon>add</mat-icon>
       Add Employee
     </button>
+    <div class="filters">
+      <mat-form-field appearance="outline">
+        <mat-label>Search by name</mat-label>
+        <input matInput type="text" placeholder="Enter employee name" [formControl]="nameControl">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Position</mat-label>
+        <mat-select [value]="filter().position ?? ''" (selectionChange)="setFilter('position', $event.value)">
+          <mat-option value="">All Positions</mat-option>
+          @for (position of uniquePositions; track position) {
+          <mat-option [value]="position">{{ position }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
   @if (isLoadingResults()) {
@@ -57,5 +72,5 @@
     </table>
   </div>
 
-  <mat-paginator [length]="resultsLength()" [pageSize]="30" (page)="handlePage()" aria-label="Select page of GitHub search results"></mat-paginator>
+  <mat-paginator [length]="resultsLength()" [pageSize]="10" (page)="handlePage()" aria-label="Select page of employees"></mat-paginator>
 </div>
