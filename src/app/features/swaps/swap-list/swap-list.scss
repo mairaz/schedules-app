@@ -1,0 +1,15 @@
+.example-card {
+  max-width: 400px;
+}
+
+.example-card-footer {
+  padding: 16px;
+}
+
+.card-container {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}

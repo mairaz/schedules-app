@@ -1,1 +1,28 @@
-<p>swap-list works!</p>
+<div class="card-container">
+  @for(swapRequest of swapRequests(); track swapRequest.id){
+  @let isApplied = swapRequest.swapsApplications.some(app => app.employeeId === currentEmployee()?.id);
+  @let isClosed = swapRequest.status !== 'pending';
+
+  <mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Request</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Day: {{swapRequest.shift?.day}}</p>
+      <p>Shift: {{swapRequest.shift?.shift}}</p>
+
+      <p>Requester: {{swapRequest.requester?.name}}</p>
+      <p>Position of Requester: {{swapRequest.requester?.position}}</p>
+    </mat-card-content>
+    <mat-card-footer class="example-card-footer">
+      <mat-chip-set aria-label="details">
+        <mat-chip>{{swapRequest.status}}</mat-chip>
+      </mat-chip-set>
+      <button mat-flat-button color="primary" [disabled]="isApplied || isClosed" (click)="requireSwap(swapRequest)">
+        @if (isApplied) { Applied } @else if (isClosed) { Closed } @else { Apply }
+      </button>
+    </mat-card-footer>
+  </mat-card>
+
+  }
+</div>
