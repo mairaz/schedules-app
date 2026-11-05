@@ -5,7 +5,7 @@ import { Employee, EmployeeFilters, PaginatedResponse } from '../core/models';
 import { map } from 'rxjs/internal/operators/map';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CreateShiftSchedule, ShiftSchedule } from '../core/models/shiftSchedule';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { Auth } from '../core/auth';
 import { environment } from '../../environments/environment';
 
@@ -92,7 +92,7 @@ export class MockData {
 
   addShifts(employeeShift: CreateShiftSchedule): Observable<ShiftSchedule> {
     return this.http.post<ShiftSchedule>(`${this.baseUrl}/shifts`, employeeShift).pipe(
-      tap(() => this.getShifts())
+      switchMap((created) => this.getShifts().pipe(map(() => created)))
     );
   }
 }

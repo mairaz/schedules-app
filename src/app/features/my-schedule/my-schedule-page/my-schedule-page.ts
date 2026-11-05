@@ -1,13 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MockData } from '../../../data/mock-data';
 import { Auth } from '../../../core/auth';
-import { DAYS_OF_WEEK, SHIFTS } from '../../../core/models/availability';
+import { DAYS_OF_WEEK, DayOfWeek, SHIFTS, ShiftPeriod } from '../../../core/models/availability';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../schedules/dialogs/dialog/dialog';
 import { NgClass } from '@angular/common';
-import { ShiftSchedule } from '../../../core/models/shiftSchedule';
 
 @Component({
   selector: 'app-my-schedule-page',
@@ -23,35 +22,17 @@ export class MySchedulePage {
 
   days = DAYS_OF_WEEK;
   shifts = SHIFTS;
-  turnos = signal<ShiftSchedule[]>([]);
   employeeNameById = computed(() => new Map(this.dataService.employees().map((employee) => [employee.id, employee.name])));
 
   ngOnInit() {
-    if (this.currentUser()) {
-      this.getShifts();
-    }
-  }
-
-  getShifts() {
-    this.dataService.getShifts().subscribe(shifts => {
-      this.turnos.set(shifts);
-    });
+    this.dataService.getShifts().subscribe();
   }
 
   turnosDaCelula(dia: string, periodo: string) {
-    return this.turnos().filter(t => t.day === dia && t.shift === periodo);
+    return this.dataService.shifts().filter(t => t.day === dia && t.shift === periodo);
   }
 
-  openDialog(data: any) {
-    this.dialog.open(Dialog, {
-      data
-    }).afterClosed().subscribe(res => {
-      if (res) {
-        const userId = this.currentUser()?.id;
-        if (userId) {
-          this.getShifts();
-        }
-      }
-    })
+  openDialog(data: { day: DayOfWeek; shift: ShiftPeriod }) {
+    this.dialog.open(Dialog, { data });
   }
 }

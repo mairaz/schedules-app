@@ -40,10 +40,6 @@ export class Dialog {
   });
   selectedEmployee = signal<Employee | undefined>(undefined);
 
-
-  ngOnInit() {
-    this.dataService.getShifts().subscribe();
-  }
   addUserShift() {
     const employee = this.selectedEmployee()
     if (!employee) return
@@ -51,7 +47,7 @@ export class Dialog {
       employeeId: employee.id,
       ...this.data,
     }).subscribe(
-      res => {
+      () => {
         this.dialogRef.close(true);
       },
       error => {
