@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MockData } from '../../../data/mock-data';
 import { Auth } from '../../../core/auth';
 import { DAYS_OF_WEEK, SHIFTS } from '../../../core/models/availability';
@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../schedules/dialogs/dialog/dialog';
 import { NgClass } from '@angular/common';
 import { ShiftSchedule } from '../../../core/models/shiftSchedule';
-import { Employee } from '../../../core/models';
 
 @Component({
   selector: 'app-my-schedule-page',
@@ -19,25 +18,18 @@ import { Employee } from '../../../core/models';
 export class MySchedulePage {
   dataService = inject(MockData);
   currentUser = signal(inject(Auth).currentUser());
-  currentEmployee = signal<Employee | undefined>(undefined);
+  currentEmployee = this.dataService.currentEmployee;
   dialog = inject(MatDialog);
 
   days = DAYS_OF_WEEK;
   shifts = SHIFTS;
   turnos = signal<ShiftSchedule[]>([]);
+  employeeNameById = computed(() => new Map(this.dataService.employees().map((employee) => [employee.id, employee.name])));
 
   ngOnInit() {
-    const user = this.currentUser();
-    if (user) {
-      this.findCurrentEmployee(user.id);
+    if (this.currentUser()) {
       this.getShifts();
     }
-  }
-
-  findCurrentEmployee(userId: string) {
-    const employees = this.dataService.employees();
-    const employee = employees.find(emp => emp.userId === userId);
-    this.currentEmployee.set(employee);
   }
 
   getShifts() {
@@ -58,8 +50,6 @@ export class MySchedulePage {
         const userId = this.currentUser()?.id;
         if (userId) {
           this.getShifts();
-
-
         }
       }
     })

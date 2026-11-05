@@ -5,7 +5,6 @@ export interface ShiftSchedule {
   employeeId: string;
   day: DayOfWeek;
   shift: ShiftPeriod;
-  name: string;
 }
 
 export type CreateShiftSchedule = Omit<ShiftSchedule, 'id'>;

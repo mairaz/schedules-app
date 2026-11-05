@@ -49,7 +49,6 @@ export class Dialog {
     if (!employee) return
     this.dataService.addShifts({
       employeeId: employee.id,
-      name: employee.name,
       ...this.data,
     }).subscribe(
       res => {
