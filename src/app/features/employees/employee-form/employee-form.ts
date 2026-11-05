@@ -79,7 +79,6 @@ export class EmployeeForm implements OnInit {
     if (this.isEditMode && this.employeeId !== null) {
       this.dataService.updateEmployee(this.employeeId, employeeData).subscribe({
         next: () => {
-          console.log('Employee updated successfully');
           this.router.navigate(['/home/employees']);
         },
         error: (err) => {
@@ -89,7 +88,6 @@ export class EmployeeForm implements OnInit {
     } else {
       this.dataService.createEmployee(employeeData).subscribe({
         next: () => {
-          console.log('Employee created successfully');
           this.router.navigate(['/home/employees']);
         },
         error: (err) => {

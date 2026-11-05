@@ -34,7 +34,6 @@ export class LoginPage {
           console.error('User not found');
           return;
         }
-        console.log('Success')
         this.router.navigateByUrl(user[0].role === 'manager' ? '/home/employees' : '/home/my-schedule');
 
       },
