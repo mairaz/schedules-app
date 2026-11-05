@@ -1,0 +1,37 @@
+<div class="card-container">
+  @for (request of swapRequests(); track request.id) {
+  @let isOpen = request.status === 'pending';
+  <mat-card class="approval-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>{{ request.shift?.day }} · {{ request.shift?.shift }}</mat-card-title>
+      <mat-card-subtitle>{{ request.requester?.name }} ({{ request.requester?.position }})</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h4>Applicants ({{ request.swapsApplications.length }})</h4>
+      @for (application of request.swapsApplications; track application.id) {
+      <div class="application-row">
+        <span>{{ application.applicant?.name }} ({{ application.applicant?.position }})</span>
+        <mat-chip-set aria-label="application status">
+          <mat-chip>{{ application.status }}</mat-chip>
+        </mat-chip-set>
+        @if (isOpen && application.status === 'pending') {
+        <div class="application-actions">
+          <button mat-flat-button color="primary" (click)="select(request, application)">Select</button>
+        </div>
+        }
+      </div>
+      } @empty {
+      <p class="empty">No applicants yet.</p>
+      }
+    </mat-card-content>
+    <mat-card-footer class="approval-card-footer">
+      <mat-chip-set aria-label="request status">
+        <mat-chip>{{ request.status }}</mat-chip>
+      </mat-chip-set>
+      @if (isOpen) {
+      <button mat-stroked-button color="warn" (click)="reject(request)">Reject request</button>
+      }
+    </mat-card-footer>
+  </mat-card>
+  }
+</div>

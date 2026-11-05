@@ -40,13 +40,24 @@ export const routes: Routes = [
 
       },
       {
+        path: 'swaps/approvals',
+        data: { role: ['manager'] },
+        canActivate: [roleGuard],
+        loadComponent: () => import('./features/swaps/swap-approvals/swap-approvals')
+          .then(m => m.SwapApprovals)
+      },
+      {
         path: 'swaps',
+        data: { role: ['manager', 'employee'] },
+        canActivate: [roleGuard],
         loadComponent: () => import('./features/swaps/swap-list/swap-list')
           .then(m => m.SwapList)
 
       },
       {
         path: 'my-schedule',
+        data: { role: ['manager', 'employee'] },
+        canActivate: [roleGuard],
         loadComponent: () => import('./features/my-schedule/my-schedule-page/my-schedule-page')
           .then(m => m.MySchedulePage)
 

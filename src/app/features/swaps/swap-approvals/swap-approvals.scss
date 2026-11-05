@@ -1,0 +1,43 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.approval-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 320px;
+  max-width: 440px;
+}
+
+.approval-card mat-card-content {
+  flex: 1 1 auto;
+}
+
+.approval-card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.application-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.application-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.empty {
+  opacity: 0.7;
+}
