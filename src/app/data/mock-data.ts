@@ -1,21 +1,25 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { User } from '../core/models/user';
 import { Employee, EmployeeFilters, PaginatedResponse } from '../core/models';
 import { map } from 'rxjs/internal/operators/map';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CreateShiftSchedule, ShiftSchedule } from '../core/models/shiftSchedule';
 import { tap } from 'rxjs';
+import { Auth } from '../core/auth';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MockData {
+  readonly authService = inject(Auth)
   baseUrl = environment.apiUrl;
   readonly pageSize = 10;
   http = inject(HttpClient);
+  currentEmployee = computed(() =>
+    this.employees().find(emp => emp?.userId === this.authService.currentUser()?.id)
+  )
   employeesData = toSignal(
     this.getAllEmployees(),
     {
@@ -47,7 +51,6 @@ export class MockData {
         const total = Number(response.headers.get('X-Total-Count') ?? 0);
         const pages = Math.max(1, Math.ceil(total / this.pageSize));
         const current = page + 1;
-
         return {
           first: 1,
           prev: current > 1 ? current - 1 : null,
